@@ -1,0 +1,24 @@
+﻿@model FAcT.Models.Clasificacionclientes
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detailles</h1>
+
+<div>
+    <h4>Clasificacion Clientes</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ClasificacionclientesID"class="btn btn-warning">Edit</a> |
+    <a asp-action="Index"class="btn btn-secondary">Back to List</a>
+</div>
