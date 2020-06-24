@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Clientes</h1>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,12 +13,17 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.nombre)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.apellidos)
             </th>
-           
+            <th>
+                @Html.DisplayNameFor(model => model.tiposdocumentos)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Documento)
             </th>
@@ -34,47 +39,63 @@
             <th>
                 @Html.DisplayNameFor(model => model.Correo)
             </th>
-            
-           
-           
+            <th>
+                @Html.DisplayNameFor(model => model.Clasificacionclientes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.pais)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.provincia)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model)
-{
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.apellidos)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.Documento)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Direccion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Celular)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Correo)
-                </td>
-
-               
-
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.clienteID">Edit</a>|
-                    <a asp-action="Details" asp-route-id="@item.clienteID">Details</a>|
-                    <a asp-action="Delete" asp-route-id="@item.clienteID">Delete</a>
-                </td>
-            </tr>
- }
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.apellidos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tiposdocumentos.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Documento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Celular)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Correo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Clasificacionclientes.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pais.nombre_pais)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.provincia.nombre_provincia)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.clienteID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.clienteID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.clienteID">Delete</a>
+            </td>
+        </tr>
+}
     </tbody>
 </table>

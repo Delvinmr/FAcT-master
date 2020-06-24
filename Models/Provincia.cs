@@ -13,8 +13,11 @@ namespace FAcT.Models
         [Key]
 
         public int provinciaID { get; set; }
-      
 
+        [Required]
+        
+        [Display(Name = "Codigo")]
+        public int Codigo { get; set; }
         [Required]
         [StringLength(50)]
         [Display(Name = "Nombre provincia")]

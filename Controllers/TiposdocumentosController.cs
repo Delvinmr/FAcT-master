@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
     public class TiposdocumentosController : Controller
     {
@@ -54,7 +54,7 @@ namespace FAcT.Contollers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("tiposdocumentosID,Descripcion")] Tiposdocumentos tiposdocumentos)
+        public async Task<IActionResult> Create([Bind("tiposdocumentosID,Codigo,Descripcion")] Tiposdocumentos tiposdocumentos)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace FAcT.Contollers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("tiposdocumentosID,Descripcion")] Tiposdocumentos tiposdocumentos)
+        public async Task<IActionResult> Edit(int id, [Bind("tiposdocumentosID,Codigo,Descripcion")] Tiposdocumentos tiposdocumentos)
         {
             if (id != tiposdocumentos.tiposdocumentosID)
             {

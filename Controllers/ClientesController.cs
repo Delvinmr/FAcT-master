@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
     public class ClientesController : Controller
     {
@@ -63,7 +63,7 @@ namespace FAcT.Contollers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("clienteID,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,ClasificacionclientesID,paisID,provinciaID")] Clientes clientes)
+        public async Task<IActionResult> Create([Bind("clienteID,Codigo,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,ClasificacionclientesID,paisID,provinciaID")] Clientes clientes)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +103,7 @@ namespace FAcT.Contollers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("clienteID,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,ClasificacionclientesID,paisID,provinciaID")] Clientes clientes)
+        public async Task<IActionResult> Edit(int id, [Bind("clienteID,Codigo,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,ClasificacionclientesID,paisID,provinciaID")] Clientes clientes)
         {
             if (id != clientes.clienteID)
             {

@@ -9,6 +9,7 @@ using FAcT.Models;
 
 namespace FAcT.Controllers
 {
+    //[Route("Area/identity/Account/Login")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -22,6 +23,7 @@ namespace FAcT.Controllers
         {
             return View();
         }
+       
 
         public IActionResult Privacy()
         {

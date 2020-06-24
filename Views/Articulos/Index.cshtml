@@ -4,14 +4,17 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Articulos</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create"class="btn btn-success ">Crear Nuevo</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
             </th>
@@ -27,7 +30,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.ClasificaciondeArticulos)
             </th>
-          
+            <th>
+                @Html.DisplayNameFor(model => model.ubicacion)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
@@ -35,9 +40,11 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) 
-{
+@foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
             </td>
@@ -53,14 +60,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ClasificaciondeArticulos.Descripcion)
             </td>
-          
+            <td>
+                @Html.DisplayFor(modelItem => item.ubicacion.Descripcion)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status.Descripcion)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.articulosID"class="btn btn-warning">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.articulosID"class="btn btn-info">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.articulosID"class="btn btn-danger">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.articulosID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.articulosID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.articulosID">Delete</a>
             </td>
         </tr>
 }

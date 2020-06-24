@@ -12,7 +12,10 @@ namespace FAcT.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int clienteID { get; set; }
-
+        [Required]
+       
+        [Display(Name = "Codigo")]
+        public int Codigo { get; set; }
 
         [Required]
         [StringLength(50)]

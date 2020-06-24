@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
-    public class FormadeenviosController : Controller
+    public class TasadecambiosController : Controller
     {
         private readonly FAcTContext _context;
 
-        public FormadeenviosController(FAcTContext context)
+        public TasadecambiosController(FAcTContext context)
         {
             _context = context;
         }
 
-        // GET: Formadeenvios
+        // GET: Tasadecambios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Formadeenvio.ToListAsync());
+            return View(await _context.Tasadecambio.ToListAsync());
         }
 
-        // GET: Formadeenvios/Details/5
+        // GET: Tasadecambios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var formadeenvio = await _context.Formadeenvio
-                .FirstOrDefaultAsync(m => m.formadeenvioID == id);
-            if (formadeenvio == null)
+            var tasadecambio = await _context.Tasadecambio
+                .FirstOrDefaultAsync(m => m.tasadecambioID == id);
+            if (tasadecambio == null)
             {
                 return NotFound();
             }
 
-            return View(formadeenvio);
+            return View(tasadecambio);
         }
 
-        // GET: Formadeenvios/Create
+        // GET: Tasadecambios/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Formadeenvios/Create
+        // POST: Tasadecambios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("formadeenvioID,Descripcion")] Formadeenvio formadeenvio)
+        public async Task<IActionResult> Create([Bind("tasadecambioID,Codigo,Descripcion")] Tasadecambio tasadecambio)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(formadeenvio);
+                _context.Add(tasadecambio);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(formadeenvio);
+            return View(tasadecambio);
         }
 
-        // GET: Formadeenvios/Edit/5
+        // GET: Tasadecambios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var formadeenvio = await _context.Formadeenvio.FindAsync(id);
-            if (formadeenvio == null)
+            var tasadecambio = await _context.Tasadecambio.FindAsync(id);
+            if (tasadecambio == null)
             {
                 return NotFound();
             }
-            return View(formadeenvio);
+            return View(tasadecambio);
         }
 
-        // POST: Formadeenvios/Edit/5
+        // POST: Tasadecambios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("formadeenvioID,Descripcion")] Formadeenvio formadeenvio)
+        public async Task<IActionResult> Edit(int id, [Bind("tasadecambioID,Codigo,Descripcion")] Tasadecambio tasadecambio)
         {
-            if (id != formadeenvio.formadeenvioID)
+            if (id != tasadecambio.tasadecambioID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace FAcT.Contollers
             {
                 try
                 {
-                    _context.Update(formadeenvio);
+                    _context.Update(tasadecambio);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FormadeenvioExists(formadeenvio.formadeenvioID))
+                    if (!TasadecambioExists(tasadecambio.tasadecambioID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace FAcT.Contollers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(formadeenvio);
+            return View(tasadecambio);
         }
 
-        // GET: Formadeenvios/Delete/5
+        // GET: Tasadecambios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var formadeenvio = await _context.Formadeenvio
-                .FirstOrDefaultAsync(m => m.formadeenvioID == id);
-            if (formadeenvio == null)
+            var tasadecambio = await _context.Tasadecambio
+                .FirstOrDefaultAsync(m => m.tasadecambioID == id);
+            if (tasadecambio == null)
             {
                 return NotFound();
             }
 
-            return View(formadeenvio);
+            return View(tasadecambio);
         }
 
-        // POST: Formadeenvios/Delete/5
+        // POST: Tasadecambios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var formadeenvio = await _context.Formadeenvio.FindAsync(id);
-            _context.Formadeenvio.Remove(formadeenvio);
+            var tasadecambio = await _context.Tasadecambio.FindAsync(id);
+            _context.Tasadecambio.Remove(tasadecambio);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FormadeenvioExists(int id)
+        private bool TasadecambioExists(int id)
         {
-            return _context.Formadeenvio.Any(e => e.formadeenvioID == id);
+            return _context.Tasadecambio.Any(e => e.tasadecambioID == id);
         }
     }
 }

@@ -8,25 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
-    public class PaisController : Controller
+    public class ProvinciasController : Controller
     {
         private readonly FAcTContext _context;
 
-        public PaisController(FAcTContext context)
+        public ProvinciasController(FAcTContext context)
         {
             _context = context;
         }
 
-        // GET: Pais
+        // GET: Provincias
         public async Task<IActionResult> Index()
         {
-            var fAcTContext = _context.Pais.Include(p => p.Moneda);
+            var fAcTContext = _context.Provincia.Include(p => p.pais);
             return View(await fAcTContext.ToListAsync());
         }
 
-        // GET: Pais/Details/5
+        // GET: Provincias/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +34,42 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var pais = await _context.Pais
-                .Include(p => p.Moneda)
-                .FirstOrDefaultAsync(m => m.paisID == id);
-            if (pais == null)
+            var provincia = await _context.Provincia
+                .Include(p => p.pais)
+                .FirstOrDefaultAsync(m => m.provinciaID == id);
+            if (provincia == null)
             {
                 return NotFound();
             }
 
-            return View(pais);
+            return View(provincia);
         }
 
-        // GET: Pais/Create
+        // GET: Provincias/Create
         public IActionResult Create()
         {
-            ViewData["MonedaID"] = new SelectList(_context.Moneda, "MonedaID", "Descripcion");
+            ViewData["paisID"] = new SelectList(_context.Pais, "paisID", "nombre_pais");
             return View();
         }
 
-        // POST: Pais/Create
+        // POST: Provincias/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("paisID,nombre_pais,MonedaID")] Pais pais)
+        public async Task<IActionResult> Create([Bind("provinciaID,Codigo,nombre_provincia,paisID")] Provincia provincia)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(pais);
+                _context.Add(provincia);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MonedaID"] = new SelectList(_context.Moneda, "MonedaID", "Descripcion", pais.MonedaID);
-            return View(pais);
+            ViewData["paisID"] = new SelectList(_context.Pais, "paisID", "nombre_pais", provincia.paisID);
+            return View(provincia);
         }
 
-        // GET: Pais/Edit/5
+        // GET: Provincias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +77,23 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var pais = await _context.Pais.FindAsync(id);
-            if (pais == null)
+            var provincia = await _context.Provincia.FindAsync(id);
+            if (provincia == null)
             {
                 return NotFound();
             }
-            ViewData["MonedaID"] = new SelectList(_context.Moneda, "MonedaID", "Descripcion", pais.MonedaID);
-            return View(pais);
+            ViewData["paisID"] = new SelectList(_context.Pais, "paisID", "nombre_pais", provincia.paisID);
+            return View(provincia);
         }
 
-        // POST: Pais/Edit/5
+        // POST: Provincias/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("paisID,nombre_pais,MonedaID")] Pais pais)
+        public async Task<IActionResult> Edit(int id, [Bind("provinciaID,Codigo,nombre_provincia,paisID")] Provincia provincia)
         {
-            if (id != pais.paisID)
+            if (id != provincia.provinciaID)
             {
                 return NotFound();
             }
@@ -102,12 +102,12 @@ namespace FAcT.Contollers
             {
                 try
                 {
-                    _context.Update(pais);
+                    _context.Update(provincia);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PaisExists(pais.paisID))
+                    if (!ProvinciaExists(provincia.provinciaID))
                     {
                         return NotFound();
                     }
@@ -118,11 +118,11 @@ namespace FAcT.Contollers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MonedaID"] = new SelectList(_context.Moneda, "MonedaID", "Descripcion", pais.MonedaID);
-            return View(pais);
+            ViewData["paisID"] = new SelectList(_context.Pais, "paisID", "nombre_pais", provincia.paisID);
+            return View(provincia);
         }
 
-        // GET: Pais/Delete/5
+        // GET: Provincias/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +130,31 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var pais = await _context.Pais
-                .Include(p => p.Moneda)
-                .FirstOrDefaultAsync(m => m.paisID == id);
-            if (pais == null)
+            var provincia = await _context.Provincia
+                .Include(p => p.pais)
+                .FirstOrDefaultAsync(m => m.provinciaID == id);
+            if (provincia == null)
             {
                 return NotFound();
             }
 
-            return View(pais);
+            return View(provincia);
         }
 
-        // POST: Pais/Delete/5
+        // POST: Provincias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pais = await _context.Pais.FindAsync(id);
-            _context.Pais.Remove(pais);
+            var provincia = await _context.Provincia.FindAsync(id);
+            _context.Provincia.Remove(provincia);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PaisExists(int id)
+        private bool ProvinciaExists(int id)
         {
-            return _context.Pais.Any(e => e.paisID == id);
+            return _context.Provincia.Any(e => e.provinciaID == id);
         }
     }
 }

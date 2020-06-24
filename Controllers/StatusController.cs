@@ -8,25 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
-    public class SuplidoresController : Controller
+    public class StatusController : Controller
     {
         private readonly FAcTContext _context;
 
-        public SuplidoresController(FAcTContext context)
+        public StatusController(FAcTContext context)
         {
             _context = context;
         }
 
-        // GET: Suplidores
+        // GET: Status
         public async Task<IActionResult> Index()
         {
-            var fAcTContext = _context.Suplidores.Include(s => s.Clasificacionsuplidores);
-            return View(await fAcTContext.ToListAsync());
+            return View(await _context.Status.ToListAsync());
         }
 
-        // GET: Suplidores/Details/5
+        // GET: Status/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var suplidores = await _context.Suplidores
-                .Include(s => s.Clasificacionsuplidores)
-                .FirstOrDefaultAsync(m => m.SuplidoresID == id);
-            if (suplidores == null)
+            var status = await _context.Status
+                .FirstOrDefaultAsync(m => m.statusID == id);
+            if (status == null)
             {
                 return NotFound();
             }
 
-            return View(suplidores);
+            return View(status);
         }
 
-        // GET: Suplidores/Create
+        // GET: Status/Create
         public IActionResult Create()
         {
-            ViewData["ClasificacionsuplidoresID"] = new SelectList(_context.Clasificacionsuplidores, "ClasificacionsuplidoresID", "Descripcion");
             return View();
         }
 
-        // POST: Suplidores/Create
+        // POST: Status/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SuplidoresID,nombre,Direccion,Telefono,Correo,ClasificacionsuplidoresID")] Suplidores suplidores)
+        public async Task<IActionResult> Create([Bind("statusID,Codigo,Descripcion")] Status status)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(suplidores);
+                _context.Add(status);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClasificacionsuplidoresID"] = new SelectList(_context.Clasificacionsuplidores, "ClasificacionsuplidoresID", "Descripcion", suplidores.ClasificacionsuplidoresID);
-            return View(suplidores);
+            return View(status);
         }
 
-        // GET: Suplidores/Edit/5
+        // GET: Status/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +73,22 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var suplidores = await _context.Suplidores.FindAsync(id);
-            if (suplidores == null)
+            var status = await _context.Status.FindAsync(id);
+            if (status == null)
             {
                 return NotFound();
             }
-            ViewData["ClasificacionsuplidoresID"] = new SelectList(_context.Clasificacionsuplidores, "ClasificacionsuplidoresID", "Descripcion", suplidores.ClasificacionsuplidoresID);
-            return View(suplidores);
+            return View(status);
         }
 
-        // POST: Suplidores/Edit/5
+        // POST: Status/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SuplidoresID,nombre,Direccion,Telefono,Correo,ClasificacionsuplidoresID")] Suplidores suplidores)
+        public async Task<IActionResult> Edit(int id, [Bind("statusID,Codigo,Descripcion")] Status status)
         {
-            if (id != suplidores.SuplidoresID)
+            if (id != status.statusID)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace FAcT.Contollers
             {
                 try
                 {
-                    _context.Update(suplidores);
+                    _context.Update(status);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SuplidoresExists(suplidores.SuplidoresID))
+                    if (!StatusExists(status.statusID))
                     {
                         return NotFound();
                     }
@@ -118,11 +113,10 @@ namespace FAcT.Contollers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClasificacionsuplidoresID"] = new SelectList(_context.Clasificacionsuplidores, "ClasificacionsuplidoresID", "Descripcion", suplidores.ClasificacionsuplidoresID);
-            return View(suplidores);
+            return View(status);
         }
 
-        // GET: Suplidores/Delete/5
+        // GET: Status/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +124,30 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var suplidores = await _context.Suplidores
-                .Include(s => s.Clasificacionsuplidores)
-                .FirstOrDefaultAsync(m => m.SuplidoresID == id);
-            if (suplidores == null)
+            var status = await _context.Status
+                .FirstOrDefaultAsync(m => m.statusID == id);
+            if (status == null)
             {
                 return NotFound();
             }
 
-            return View(suplidores);
+            return View(status);
         }
 
-        // POST: Suplidores/Delete/5
+        // POST: Status/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var suplidores = await _context.Suplidores.FindAsync(id);
-            _context.Suplidores.Remove(suplidores);
+            var status = await _context.Status.FindAsync(id);
+            _context.Status.Remove(status);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SuplidoresExists(int id)
+        private bool StatusExists(int id)
         {
-            return _context.Suplidores.Any(e => e.SuplidoresID == id);
+            return _context.Status.Any(e => e.statusID == id);
         }
     }
 }

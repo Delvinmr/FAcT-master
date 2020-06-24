@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
-    public class TasadecambiosController : Controller
+    public class MarcasController : Controller
     {
         private readonly FAcTContext _context;
 
-        public TasadecambiosController(FAcTContext context)
+        public MarcasController(FAcTContext context)
         {
             _context = context;
         }
 
-        // GET: Tasadecambios
+        // GET: Marcas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tasadecambio.ToListAsync());
+            return View(await _context.Marca.ToListAsync());
         }
 
-        // GET: Tasadecambios/Details/5
+        // GET: Marcas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var tasadecambio = await _context.Tasadecambio
-                .FirstOrDefaultAsync(m => m.tasadecambioID == id);
-            if (tasadecambio == null)
+            var marca = await _context.Marca
+                .FirstOrDefaultAsync(m => m.marcaID == id);
+            if (marca == null)
             {
                 return NotFound();
             }
 
-            return View(tasadecambio);
+            return View(marca);
         }
 
-        // GET: Tasadecambios/Create
+        // GET: Marcas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Tasadecambios/Create
+        // POST: Marcas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("tasadecambioID,Descripcion")] Tasadecambio tasadecambio)
+        public async Task<IActionResult> Create([Bind("marcaID,Codigo,Descripcion")] Marca marca)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tasadecambio);
+                _context.Add(marca);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tasadecambio);
+            return View(marca);
         }
 
-        // GET: Tasadecambios/Edit/5
+        // GET: Marcas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var tasadecambio = await _context.Tasadecambio.FindAsync(id);
-            if (tasadecambio == null)
+            var marca = await _context.Marca.FindAsync(id);
+            if (marca == null)
             {
                 return NotFound();
             }
-            return View(tasadecambio);
+            return View(marca);
         }
 
-        // POST: Tasadecambios/Edit/5
+        // POST: Marcas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("tasadecambioID,Descripcion")] Tasadecambio tasadecambio)
+        public async Task<IActionResult> Edit(int id, [Bind("marcaID,Codigo,Descripcion")] Marca marca)
         {
-            if (id != tasadecambio.tasadecambioID)
+            if (id != marca.marcaID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace FAcT.Contollers
             {
                 try
                 {
-                    _context.Update(tasadecambio);
+                    _context.Update(marca);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TasadecambioExists(tasadecambio.tasadecambioID))
+                    if (!MarcaExists(marca.marcaID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace FAcT.Contollers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tasadecambio);
+            return View(marca);
         }
 
-        // GET: Tasadecambios/Delete/5
+        // GET: Marcas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var tasadecambio = await _context.Tasadecambio
-                .FirstOrDefaultAsync(m => m.tasadecambioID == id);
-            if (tasadecambio == null)
+            var marca = await _context.Marca
+                .FirstOrDefaultAsync(m => m.marcaID == id);
+            if (marca == null)
             {
                 return NotFound();
             }
 
-            return View(tasadecambio);
+            return View(marca);
         }
 
-        // POST: Tasadecambios/Delete/5
+        // POST: Marcas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tasadecambio = await _context.Tasadecambio.FindAsync(id);
-            _context.Tasadecambio.Remove(tasadecambio);
+            var marca = await _context.Marca.FindAsync(id);
+            _context.Marca.Remove(marca);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TasadecambioExists(int id)
+        private bool MarcaExists(int id)
         {
-            return _context.Tasadecambio.Any(e => e.tasadecambioID == id);
+            return _context.Marca.Any(e => e.marcaID == id);
         }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
     public class EmpleadoesController : Controller
     {
@@ -61,7 +61,7 @@ namespace FAcT.Contollers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("empleadoID,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,empresaID,PuestodetrabajoID")] Empleado empleado)
+        public async Task<IActionResult> Create([Bind("empleadoID,Codigo,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,empresaID,PuestodetrabajoID")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace FAcT.Contollers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("empleadoID,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,empresaID,PuestodetrabajoID")] Empleado empleado)
+        public async Task<IActionResult> Edit(int id, [Bind("empleadoID,Codigo,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,empresaID,PuestodetrabajoID")] Empleado empleado)
         {
             if (id != empleado.empleadoID)
             {

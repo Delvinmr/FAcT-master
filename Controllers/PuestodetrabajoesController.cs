@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
-    public class ClasificacionclientesController : Controller
+    public class PuestodetrabajoesController : Controller
     {
         private readonly FAcTContext _context;
 
-        public ClasificacionclientesController(FAcTContext context)
+        public PuestodetrabajoesController(FAcTContext context)
         {
             _context = context;
         }
 
-        // GET: Clasificacionclientes
+        // GET: Puestodetrabajoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Clasificacionclientes.ToListAsync());
+            return View(await _context.Puestodetrabajo.ToListAsync());
         }
 
-        // GET: Clasificacionclientes/Details/5
+        // GET: Puestodetrabajoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var clasificacionclientes = await _context.Clasificacionclientes
-                .FirstOrDefaultAsync(m => m.ClasificacionclientesID == id);
-            if (clasificacionclientes == null)
+            var puestodetrabajo = await _context.Puestodetrabajo
+                .FirstOrDefaultAsync(m => m.PuestodetrabajoID == id);
+            if (puestodetrabajo == null)
             {
                 return NotFound();
             }
 
-            return View(clasificacionclientes);
+            return View(puestodetrabajo);
         }
 
-        // GET: Clasificacionclientes/Create
+        // GET: Puestodetrabajoes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Clasificacionclientes/Create
+        // POST: Puestodetrabajoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClasificacionclientesID,Descripcion")] Clasificacionclientes clasificacionclientes)
+        public async Task<IActionResult> Create([Bind("PuestodetrabajoID,Codigo,Descripcion")] Puestodetrabajo puestodetrabajo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(clasificacionclientes);
+                _context.Add(puestodetrabajo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(clasificacionclientes);
+            return View(puestodetrabajo);
         }
 
-        // GET: Clasificacionclientes/Edit/5
+        // GET: Puestodetrabajoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var clasificacionclientes = await _context.Clasificacionclientes.FindAsync(id);
-            if (clasificacionclientes == null)
+            var puestodetrabajo = await _context.Puestodetrabajo.FindAsync(id);
+            if (puestodetrabajo == null)
             {
                 return NotFound();
             }
-            return View(clasificacionclientes);
+            return View(puestodetrabajo);
         }
 
-        // POST: Clasificacionclientes/Edit/5
+        // POST: Puestodetrabajoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClasificacionclientesID,Descripcion")] Clasificacionclientes clasificacionclientes)
+        public async Task<IActionResult> Edit(int id, [Bind("PuestodetrabajoID,Codigo,Descripcion")] Puestodetrabajo puestodetrabajo)
         {
-            if (id != clasificacionclientes.ClasificacionclientesID)
+            if (id != puestodetrabajo.PuestodetrabajoID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace FAcT.Contollers
             {
                 try
                 {
-                    _context.Update(clasificacionclientes);
+                    _context.Update(puestodetrabajo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClasificacionclientesExists(clasificacionclientes.ClasificacionclientesID))
+                    if (!PuestodetrabajoExists(puestodetrabajo.PuestodetrabajoID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace FAcT.Contollers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(clasificacionclientes);
+            return View(puestodetrabajo);
         }
 
-        // GET: Clasificacionclientes/Delete/5
+        // GET: Puestodetrabajoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var clasificacionclientes = await _context.Clasificacionclientes
-                .FirstOrDefaultAsync(m => m.ClasificacionclientesID == id);
-            if (clasificacionclientes == null)
+            var puestodetrabajo = await _context.Puestodetrabajo
+                .FirstOrDefaultAsync(m => m.PuestodetrabajoID == id);
+            if (puestodetrabajo == null)
             {
                 return NotFound();
             }
 
-            return View(clasificacionclientes);
+            return View(puestodetrabajo);
         }
 
-        // POST: Clasificacionclientes/Delete/5
+        // POST: Puestodetrabajoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var clasificacionclientes = await _context.Clasificacionclientes.FindAsync(id);
-            _context.Clasificacionclientes.Remove(clasificacionclientes);
+            var puestodetrabajo = await _context.Puestodetrabajo.FindAsync(id);
+            _context.Puestodetrabajo.Remove(puestodetrabajo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClasificacionclientesExists(int id)
+        private bool PuestodetrabajoExists(int id)
         {
-            return _context.Clasificacionclientes.Any(e => e.ClasificacionclientesID == id);
+            return _context.Puestodetrabajo.Any(e => e.PuestodetrabajoID == id);
         }
     }
 }

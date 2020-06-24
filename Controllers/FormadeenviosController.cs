@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
-    public class ClasificacionsuplidoresController : Controller
+    public class FormadeenviosController : Controller
     {
         private readonly FAcTContext _context;
 
-        public ClasificacionsuplidoresController(FAcTContext context)
+        public FormadeenviosController(FAcTContext context)
         {
             _context = context;
         }
 
-        // GET: Clasificacionsuplidores
+        // GET: Formadeenvios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Clasificacionsuplidores.ToListAsync());
+            return View(await _context.Formadeenvio.ToListAsync());
         }
 
-        // GET: Clasificacionsuplidores/Details/5
+        // GET: Formadeenvios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var clasificacionsuplidores = await _context.Clasificacionsuplidores
-                .FirstOrDefaultAsync(m => m.ClasificacionsuplidoresID == id);
-            if (clasificacionsuplidores == null)
+            var formadeenvio = await _context.Formadeenvio
+                .FirstOrDefaultAsync(m => m.formadeenvioID == id);
+            if (formadeenvio == null)
             {
                 return NotFound();
             }
 
-            return View(clasificacionsuplidores);
+            return View(formadeenvio);
         }
 
-        // GET: Clasificacionsuplidores/Create
+        // GET: Formadeenvios/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Clasificacionsuplidores/Create
+        // POST: Formadeenvios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClasificacionsuplidoresID,Descripcion")] Clasificacionsuplidores clasificacionsuplidores)
+        public async Task<IActionResult> Create([Bind("formadeenvioID,Codigo,Descripcion")] Formadeenvio formadeenvio)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(clasificacionsuplidores);
+                _context.Add(formadeenvio);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(clasificacionsuplidores);
+            return View(formadeenvio);
         }
 
-        // GET: Clasificacionsuplidores/Edit/5
+        // GET: Formadeenvios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var clasificacionsuplidores = await _context.Clasificacionsuplidores.FindAsync(id);
-            if (clasificacionsuplidores == null)
+            var formadeenvio = await _context.Formadeenvio.FindAsync(id);
+            if (formadeenvio == null)
             {
                 return NotFound();
             }
-            return View(clasificacionsuplidores);
+            return View(formadeenvio);
         }
 
-        // POST: Clasificacionsuplidores/Edit/5
+        // POST: Formadeenvios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClasificacionsuplidoresID,Descripcion")] Clasificacionsuplidores clasificacionsuplidores)
+        public async Task<IActionResult> Edit(int id, [Bind("formadeenvioID,Codigo,Descripcion")] Formadeenvio formadeenvio)
         {
-            if (id != clasificacionsuplidores.ClasificacionsuplidoresID)
+            if (id != formadeenvio.formadeenvioID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace FAcT.Contollers
             {
                 try
                 {
-                    _context.Update(clasificacionsuplidores);
+                    _context.Update(formadeenvio);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClasificacionsuplidoresExists(clasificacionsuplidores.ClasificacionsuplidoresID))
+                    if (!FormadeenvioExists(formadeenvio.formadeenvioID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace FAcT.Contollers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(clasificacionsuplidores);
+            return View(formadeenvio);
         }
 
-        // GET: Clasificacionsuplidores/Delete/5
+        // GET: Formadeenvios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var clasificacionsuplidores = await _context.Clasificacionsuplidores
-                .FirstOrDefaultAsync(m => m.ClasificacionsuplidoresID == id);
-            if (clasificacionsuplidores == null)
+            var formadeenvio = await _context.Formadeenvio
+                .FirstOrDefaultAsync(m => m.formadeenvioID == id);
+            if (formadeenvio == null)
             {
                 return NotFound();
             }
 
-            return View(clasificacionsuplidores);
+            return View(formadeenvio);
         }
 
-        // POST: Clasificacionsuplidores/Delete/5
+        // POST: Formadeenvios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var clasificacionsuplidores = await _context.Clasificacionsuplidores.FindAsync(id);
-            _context.Clasificacionsuplidores.Remove(clasificacionsuplidores);
+            var formadeenvio = await _context.Formadeenvio.FindAsync(id);
+            _context.Formadeenvio.Remove(formadeenvio);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClasificacionsuplidoresExists(int id)
+        private bool FormadeenvioExists(int id)
         {
-            return _context.Clasificacionsuplidores.Any(e => e.ClasificacionsuplidoresID == id);
+            return _context.Formadeenvio.Any(e => e.formadeenvioID == id);
         }
     }
 }

@@ -12,8 +12,11 @@ namespace FAcT.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         public int sectorID { get; set; }
-      
 
+        [Required]
+        
+        [Display(Name = "Codigo")]
+        public int Codigo { get; set; }
         [Required]
         [StringLength(50)]
         [Display(Name = "Nombre Sector")]

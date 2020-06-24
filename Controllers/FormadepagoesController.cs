@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
-    public class UbicacionsController : Controller
+    public class FormadepagoesController : Controller
     {
         private readonly FAcTContext _context;
 
-        public UbicacionsController(FAcTContext context)
+        public FormadepagoesController(FAcTContext context)
         {
             _context = context;
         }
 
-        // GET: Ubicacions
+        // GET: Formadepagoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Ubicacion.ToListAsync());
+            return View(await _context.Formadepago.ToListAsync());
         }
 
-        // GET: Ubicacions/Details/5
+        // GET: Formadepagoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var ubicacion = await _context.Ubicacion
-                .FirstOrDefaultAsync(m => m.ubicacionID == id);
-            if (ubicacion == null)
+            var formadepago = await _context.Formadepago
+                .FirstOrDefaultAsync(m => m.formadepagoID == id);
+            if (formadepago == null)
             {
                 return NotFound();
             }
 
-            return View(ubicacion);
+            return View(formadepago);
         }
 
-        // GET: Ubicacions/Create
+        // GET: Formadepagoes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Ubicacions/Create
+        // POST: Formadepagoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ubicacionID,Descripcion")] Ubicacion ubicacion)
+        public async Task<IActionResult> Create([Bind("formadepagoID,Codigo,Descripcion")] Formadepago formadepago)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(ubicacion);
+                _context.Add(formadepago);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(ubicacion);
+            return View(formadepago);
         }
 
-        // GET: Ubicacions/Edit/5
+        // GET: Formadepagoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var ubicacion = await _context.Ubicacion.FindAsync(id);
-            if (ubicacion == null)
+            var formadepago = await _context.Formadepago.FindAsync(id);
+            if (formadepago == null)
             {
                 return NotFound();
             }
-            return View(ubicacion);
+            return View(formadepago);
         }
 
-        // POST: Ubicacions/Edit/5
+        // POST: Formadepagoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ubicacionID,Descripcion")] Ubicacion ubicacion)
+        public async Task<IActionResult> Edit(int id, [Bind("formadepagoID,Codigo,Descripcion")] Formadepago formadepago)
         {
-            if (id != ubicacion.ubicacionID)
+            if (id != formadepago.formadepagoID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace FAcT.Contollers
             {
                 try
                 {
-                    _context.Update(ubicacion);
+                    _context.Update(formadepago);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UbicacionExists(ubicacion.ubicacionID))
+                    if (!FormadepagoExists(formadepago.formadepagoID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace FAcT.Contollers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(ubicacion);
+            return View(formadepago);
         }
 
-        // GET: Ubicacions/Delete/5
+        // GET: Formadepagoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var ubicacion = await _context.Ubicacion
-                .FirstOrDefaultAsync(m => m.ubicacionID == id);
-            if (ubicacion == null)
+            var formadepago = await _context.Formadepago
+                .FirstOrDefaultAsync(m => m.formadepagoID == id);
+            if (formadepago == null)
             {
                 return NotFound();
             }
 
-            return View(ubicacion);
+            return View(formadepago);
         }
 
-        // POST: Ubicacions/Delete/5
+        // POST: Formadepagoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ubicacion = await _context.Ubicacion.FindAsync(id);
-            _context.Ubicacion.Remove(ubicacion);
+            var formadepago = await _context.Formadepago.FindAsync(id);
+            _context.Formadepago.Remove(formadepago);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UbicacionExists(int id)
+        private bool FormadepagoExists(int id)
         {
-            return _context.Ubicacion.Any(e => e.ubicacionID == id);
+            return _context.Formadepago.Any(e => e.formadepagoID == id);
         }
     }
 }

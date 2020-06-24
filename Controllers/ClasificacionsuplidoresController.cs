@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
-    public class MonedasController : Controller
+    public class ClasificacionsuplidoresController : Controller
     {
         private readonly FAcTContext _context;
 
-        public MonedasController(FAcTContext context)
+        public ClasificacionsuplidoresController(FAcTContext context)
         {
             _context = context;
         }
 
-        // GET: Monedas
+        // GET: Clasificacionsuplidores
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Moneda.ToListAsync());
+            return View(await _context.Clasificacionsuplidores.ToListAsync());
         }
 
-        // GET: Monedas/Details/5
+        // GET: Clasificacionsuplidores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var moneda = await _context.Moneda
-                .FirstOrDefaultAsync(m => m.MonedaID == id);
-            if (moneda == null)
+            var clasificacionsuplidores = await _context.Clasificacionsuplidores
+                .FirstOrDefaultAsync(m => m.ClasificacionsuplidoresID == id);
+            if (clasificacionsuplidores == null)
             {
                 return NotFound();
             }
 
-            return View(moneda);
+            return View(clasificacionsuplidores);
         }
 
-        // GET: Monedas/Create
+        // GET: Clasificacionsuplidores/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Monedas/Create
+        // POST: Clasificacionsuplidores/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MonedaID,Descripcion")] Moneda moneda)
+        public async Task<IActionResult> Create([Bind("ClasificacionsuplidoresID,Codigo,Descripcion")] Clasificacionsuplidores clasificacionsuplidores)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(moneda);
+                _context.Add(clasificacionsuplidores);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(moneda);
+            return View(clasificacionsuplidores);
         }
 
-        // GET: Monedas/Edit/5
+        // GET: Clasificacionsuplidores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var moneda = await _context.Moneda.FindAsync(id);
-            if (moneda == null)
+            var clasificacionsuplidores = await _context.Clasificacionsuplidores.FindAsync(id);
+            if (clasificacionsuplidores == null)
             {
                 return NotFound();
             }
-            return View(moneda);
+            return View(clasificacionsuplidores);
         }
 
-        // POST: Monedas/Edit/5
+        // POST: Clasificacionsuplidores/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MonedaID,Descripcion")] Moneda moneda)
+        public async Task<IActionResult> Edit(int id, [Bind("ClasificacionsuplidoresID,Codigo,Descripcion")] Clasificacionsuplidores clasificacionsuplidores)
         {
-            if (id != moneda.MonedaID)
+            if (id != clasificacionsuplidores.ClasificacionsuplidoresID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace FAcT.Contollers
             {
                 try
                 {
-                    _context.Update(moneda);
+                    _context.Update(clasificacionsuplidores);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MonedaExists(moneda.MonedaID))
+                    if (!ClasificacionsuplidoresExists(clasificacionsuplidores.ClasificacionsuplidoresID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace FAcT.Contollers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(moneda);
+            return View(clasificacionsuplidores);
         }
 
-        // GET: Monedas/Delete/5
+        // GET: Clasificacionsuplidores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var moneda = await _context.Moneda
-                .FirstOrDefaultAsync(m => m.MonedaID == id);
-            if (moneda == null)
+            var clasificacionsuplidores = await _context.Clasificacionsuplidores
+                .FirstOrDefaultAsync(m => m.ClasificacionsuplidoresID == id);
+            if (clasificacionsuplidores == null)
             {
                 return NotFound();
             }
 
-            return View(moneda);
+            return View(clasificacionsuplidores);
         }
 
-        // POST: Monedas/Delete/5
+        // POST: Clasificacionsuplidores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var moneda = await _context.Moneda.FindAsync(id);
-            _context.Moneda.Remove(moneda);
+            var clasificacionsuplidores = await _context.Clasificacionsuplidores.FindAsync(id);
+            _context.Clasificacionsuplidores.Remove(clasificacionsuplidores);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MonedaExists(int id)
+        private bool ClasificacionsuplidoresExists(int id)
         {
-            return _context.Moneda.Any(e => e.MonedaID == id);
+            return _context.Clasificacionsuplidores.Any(e => e.ClasificacionsuplidoresID == id);
         }
     }
 }

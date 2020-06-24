@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
     public class VendedoresController : Controller
     {
@@ -59,7 +59,7 @@ namespace FAcT.Contollers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("vendedorID,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,SuplidoresID")] Vendedores vendedores)
+        public async Task<IActionResult> Create([Bind("vendedorID,Codigo,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,SuplidoresID")] Vendedores vendedores)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace FAcT.Contollers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("vendedorID,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,SuplidoresID")] Vendedores vendedores)
+        public async Task<IActionResult> Edit(int id, [Bind("vendedorID,Codigo,nombre,apellidos,tiposdocumentosID,Documento,Direccion,Telefono,Celular,Correo,SuplidoresID")] Vendedores vendedores)
         {
             if (id != vendedores.vendedorID)
             {

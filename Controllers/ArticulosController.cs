@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
     public class ArticulosController : Controller
     {
@@ -65,7 +65,7 @@ namespace FAcT.Contollers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("articulosID,Descripcion,Precio,unidaddemedidasID,marcaID,ClasificaciondeArticulosID,ubicacionID,statusID")] Articulos articulos)
+        public async Task<IActionResult> Create([Bind("articulosID,Codigo,Descripcion,Precio,unidaddemedidasID,marcaID,ClasificaciondeArticulosID,ubicacionID,statusID")] Articulos articulos)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +107,7 @@ namespace FAcT.Contollers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("articulosID,Descripcion,Precio,unidaddemedidasID,marcaID,ClasificaciondeArticulosID,ubicacionID,statusID")] Articulos articulos)
+        public async Task<IActionResult> Edit(int id, [Bind("articulosID,Codigo,Descripcion,Precio,unidaddemedidasID,marcaID,ClasificaciondeArticulosID,ubicacionID,statusID")] Articulos articulos)
         {
             if (id != articulos.articulosID)
             {

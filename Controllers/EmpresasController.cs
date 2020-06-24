@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
-    public class MarcasController : Controller
+    public class EmpresasController : Controller
     {
         private readonly FAcTContext _context;
 
-        public MarcasController(FAcTContext context)
+        public EmpresasController(FAcTContext context)
         {
             _context = context;
         }
 
-        // GET: Marcas
+        // GET: Empresas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Marca.ToListAsync());
+            return View(await _context.Empresa.ToListAsync());
         }
 
-        // GET: Marcas/Details/5
+        // GET: Empresas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var marca = await _context.Marca
-                .FirstOrDefaultAsync(m => m.marcaID == id);
-            if (marca == null)
+            var empresa = await _context.Empresa
+                .FirstOrDefaultAsync(m => m.empresaID == id);
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return View(marca);
+            return View(empresa);
         }
 
-        // GET: Marcas/Create
+        // GET: Empresas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Marcas/Create
+        // POST: Empresas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("marcaID,Descripcion")] Marca marca)
+        public async Task<IActionResult> Create([Bind("empresaID,Codigo,Name,Descripcion")] Empresa empresa)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(marca);
+                _context.Add(empresa);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(marca);
+            return View(empresa);
         }
 
-        // GET: Marcas/Edit/5
+        // GET: Empresas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var marca = await _context.Marca.FindAsync(id);
-            if (marca == null)
+            var empresa = await _context.Empresa.FindAsync(id);
+            if (empresa == null)
             {
                 return NotFound();
             }
-            return View(marca);
+            return View(empresa);
         }
 
-        // POST: Marcas/Edit/5
+        // POST: Empresas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("marcaID,Descripcion")] Marca marca)
+        public async Task<IActionResult> Edit(int id, [Bind("empresaID,Codigo,Name,Descripcion")] Empresa empresa)
         {
-            if (id != marca.marcaID)
+            if (id != empresa.empresaID)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace FAcT.Contollers
             {
                 try
                 {
-                    _context.Update(marca);
+                    _context.Update(empresa);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MarcaExists(marca.marcaID))
+                    if (!EmpresaExists(empresa.empresaID))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace FAcT.Contollers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(marca);
+            return View(empresa);
         }
 
-        // GET: Marcas/Delete/5
+        // GET: Empresas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var marca = await _context.Marca
-                .FirstOrDefaultAsync(m => m.marcaID == id);
-            if (marca == null)
+            var empresa = await _context.Empresa
+                .FirstOrDefaultAsync(m => m.empresaID == id);
+            if (empresa == null)
             {
                 return NotFound();
             }
 
-            return View(marca);
+            return View(empresa);
         }
 
-        // POST: Marcas/Delete/5
+        // POST: Empresas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var marca = await _context.Marca.FindAsync(id);
-            _context.Marca.Remove(marca);
+            var empresa = await _context.Empresa.FindAsync(id);
+            _context.Empresa.Remove(empresa);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MarcaExists(int id)
+        private bool EmpresaExists(int id)
         {
-            return _context.Marca.Any(e => e.marcaID == id);
+            return _context.Empresa.Any(e => e.empresaID == id);
         }
     }
 }

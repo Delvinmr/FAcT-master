@@ -8,25 +8,24 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
-    public class ProvinciasController : Controller
+    public class UnidaddemedidasController : Controller
     {
         private readonly FAcTContext _context;
 
-        public ProvinciasController(FAcTContext context)
+        public UnidaddemedidasController(FAcTContext context)
         {
             _context = context;
         }
 
-        // GET: Provincias
+        // GET: Unidaddemedidas
         public async Task<IActionResult> Index()
         {
-            var fAcTContext = _context.Provincia.Include(p => p.pais);
-            return View(await fAcTContext.ToListAsync());
+            return View(await _context.Unidaddemedidas.ToListAsync());
         }
 
-        // GET: Provincias/Details/5
+        // GET: Unidaddemedidas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,42 +33,39 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var provincia = await _context.Provincia
-                .Include(p => p.pais)
-                .FirstOrDefaultAsync(m => m.provinciaID == id);
-            if (provincia == null)
+            var unidaddemedidas = await _context.Unidaddemedidas
+                .FirstOrDefaultAsync(m => m.unidaddemedidasID == id);
+            if (unidaddemedidas == null)
             {
                 return NotFound();
             }
 
-            return View(provincia);
+            return View(unidaddemedidas);
         }
 
-        // GET: Provincias/Create
+        // GET: Unidaddemedidas/Create
         public IActionResult Create()
         {
-            ViewData["paisID"] = new SelectList(_context.Pais, "paisID", "nombre_pais");
             return View();
         }
 
-        // POST: Provincias/Create
+        // POST: Unidaddemedidas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("provinciaID,nombre_provincia,paisID")] Provincia provincia)
+        public async Task<IActionResult> Create([Bind("unidaddemedidasID,Codigo,Descripcion")] Unidaddemedidas unidaddemedidas)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(provincia);
+                _context.Add(unidaddemedidas);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["paisID"] = new SelectList(_context.Pais, "paisID", "nombre_pais", provincia.paisID);
-            return View(provincia);
+            return View(unidaddemedidas);
         }
 
-        // GET: Provincias/Edit/5
+        // GET: Unidaddemedidas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,23 +73,22 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var provincia = await _context.Provincia.FindAsync(id);
-            if (provincia == null)
+            var unidaddemedidas = await _context.Unidaddemedidas.FindAsync(id);
+            if (unidaddemedidas == null)
             {
                 return NotFound();
             }
-            ViewData["paisID"] = new SelectList(_context.Pais, "paisID", "nombre_pais", provincia.paisID);
-            return View(provincia);
+            return View(unidaddemedidas);
         }
 
-        // POST: Provincias/Edit/5
+        // POST: Unidaddemedidas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("provinciaID,nombre_provincia,paisID")] Provincia provincia)
+        public async Task<IActionResult> Edit(int id, [Bind("unidaddemedidasID,Codigo,Descripcion")] Unidaddemedidas unidaddemedidas)
         {
-            if (id != provincia.provinciaID)
+            if (id != unidaddemedidas.unidaddemedidasID)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace FAcT.Contollers
             {
                 try
                 {
-                    _context.Update(provincia);
+                    _context.Update(unidaddemedidas);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProvinciaExists(provincia.provinciaID))
+                    if (!UnidaddemedidasExists(unidaddemedidas.unidaddemedidasID))
                     {
                         return NotFound();
                     }
@@ -118,11 +113,10 @@ namespace FAcT.Contollers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["paisID"] = new SelectList(_context.Pais, "paisID", "nombre_pais", provincia.paisID);
-            return View(provincia);
+            return View(unidaddemedidas);
         }
 
-        // GET: Provincias/Delete/5
+        // GET: Unidaddemedidas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -130,31 +124,30 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var provincia = await _context.Provincia
-                .Include(p => p.pais)
-                .FirstOrDefaultAsync(m => m.provinciaID == id);
-            if (provincia == null)
+            var unidaddemedidas = await _context.Unidaddemedidas
+                .FirstOrDefaultAsync(m => m.unidaddemedidasID == id);
+            if (unidaddemedidas == null)
             {
                 return NotFound();
             }
 
-            return View(provincia);
+            return View(unidaddemedidas);
         }
 
-        // POST: Provincias/Delete/5
+        // POST: Unidaddemedidas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var provincia = await _context.Provincia.FindAsync(id);
-            _context.Provincia.Remove(provincia);
+            var unidaddemedidas = await _context.Unidaddemedidas.FindAsync(id);
+            _context.Unidaddemedidas.Remove(unidaddemedidas);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProvinciaExists(int id)
+        private bool UnidaddemedidasExists(int id)
         {
-            return _context.Provincia.Any(e => e.provinciaID == id);
+            return _context.Unidaddemedidas.Any(e => e.unidaddemedidasID == id);
         }
     }
 }

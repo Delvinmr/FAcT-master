@@ -8,24 +8,25 @@ using Microsoft.EntityFrameworkCore;
 using FAcT.Data;
 using FAcT.Models;
 
-namespace FAcT.Contollers
+namespace FAcT.Controllers
 {
-    public class FormadepagoesController : Controller
+    public class MunicipiosController : Controller
     {
         private readonly FAcTContext _context;
 
-        public FormadepagoesController(FAcTContext context)
+        public MunicipiosController(FAcTContext context)
         {
             _context = context;
         }
 
-        // GET: Formadepagoes
+        // GET: Municipios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Formadepago.ToListAsync());
+            var fAcTContext = _context.Municipio.Include(m => m.Provincia);
+            return View(await fAcTContext.ToListAsync());
         }
 
-        // GET: Formadepagoes/Details/5
+        // GET: Municipios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,42 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var formadepago = await _context.Formadepago
-                .FirstOrDefaultAsync(m => m.formadepagoID == id);
-            if (formadepago == null)
+            var municipio = await _context.Municipio
+                .Include(m => m.Provincia)
+                .FirstOrDefaultAsync(m => m.municipioID == id);
+            if (municipio == null)
             {
                 return NotFound();
             }
 
-            return View(formadepago);
+            return View(municipio);
         }
 
-        // GET: Formadepagoes/Create
+        // GET: Municipios/Create
         public IActionResult Create()
         {
+            ViewData["provinciaID"] = new SelectList(_context.Provincia, "provinciaID", "nombre_provincia");
             return View();
         }
 
-        // POST: Formadepagoes/Create
+        // POST: Municipios/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("formadepagoID,Descripcion")] Formadepago formadepago)
+        public async Task<IActionResult> Create([Bind("municipioID,Codigo,nombre_municipio,provinciaID")] Municipio municipio)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(formadepago);
+                _context.Add(municipio);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(formadepago);
+            ViewData["provinciaID"] = new SelectList(_context.Provincia, "provinciaID", "nombre_provincia", municipio.provinciaID);
+            return View(municipio);
         }
 
-        // GET: Formadepagoes/Edit/5
+        // GET: Municipios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +77,23 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var formadepago = await _context.Formadepago.FindAsync(id);
-            if (formadepago == null)
+            var municipio = await _context.Municipio.FindAsync(id);
+            if (municipio == null)
             {
                 return NotFound();
             }
-            return View(formadepago);
+            ViewData["provinciaID"] = new SelectList(_context.Provincia, "provinciaID", "nombre_provincia", municipio.provinciaID);
+            return View(municipio);
         }
 
-        // POST: Formadepagoes/Edit/5
+        // POST: Municipios/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("formadepagoID,Descripcion")] Formadepago formadepago)
+        public async Task<IActionResult> Edit(int id, [Bind("municipioID,Codigo,nombre_municipio,provinciaID")] Municipio municipio)
         {
-            if (id != formadepago.formadepagoID)
+            if (id != municipio.municipioID)
             {
                 return NotFound();
             }
@@ -97,12 +102,12 @@ namespace FAcT.Contollers
             {
                 try
                 {
-                    _context.Update(formadepago);
+                    _context.Update(municipio);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FormadepagoExists(formadepago.formadepagoID))
+                    if (!MunicipioExists(municipio.municipioID))
                     {
                         return NotFound();
                     }
@@ -113,10 +118,11 @@ namespace FAcT.Contollers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(formadepago);
+            ViewData["provinciaID"] = new SelectList(_context.Provincia, "provinciaID", "nombre_provincia", municipio.provinciaID);
+            return View(municipio);
         }
 
-        // GET: Formadepagoes/Delete/5
+        // GET: Municipios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +130,31 @@ namespace FAcT.Contollers
                 return NotFound();
             }
 
-            var formadepago = await _context.Formadepago
-                .FirstOrDefaultAsync(m => m.formadepagoID == id);
-            if (formadepago == null)
+            var municipio = await _context.Municipio
+                .Include(m => m.Provincia)
+                .FirstOrDefaultAsync(m => m.municipioID == id);
+            if (municipio == null)
             {
                 return NotFound();
             }
 
-            return View(formadepago);
+            return View(municipio);
         }
 
-        // POST: Formadepagoes/Delete/5
+        // POST: Municipios/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var formadepago = await _context.Formadepago.FindAsync(id);
-            _context.Formadepago.Remove(formadepago);
+            var municipio = await _context.Municipio.FindAsync(id);
+            _context.Municipio.Remove(municipio);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FormadepagoExists(int id)
+        private bool MunicipioExists(int id)
         {
-            return _context.Formadepago.Any(e => e.formadepagoID == id);
+            return _context.Municipio.Any(e => e.municipioID == id);
         }
     }
 }
